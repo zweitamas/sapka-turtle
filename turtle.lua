@@ -78,6 +78,14 @@ function bootscreen()
     paintutils.drawImage(img, 0, 1)
     os.sleep(3)
     term.clear()
+    drawGUIbox()
+end
+function drawGUIbox()
+    term.clear()
+    paintutils.drawLine(1, 1, 32, 32, colors.red) --default color
+    paintutils.drawLine(1, 1, 1, 32, colors.blue) --Top Bar
+    os.sleep(3)
+    term.clear()
 end
 
 
