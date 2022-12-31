@@ -51,7 +51,7 @@ function isBlockin(myblock, inspectedblock)
 	answer=string.match(textutils.serialise(inspectedblock), myblock)
 	if (answer ~= nil) then 
 	return true
-	else false
+	else false end
 end
 
 function printLog(text)
