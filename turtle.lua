@@ -106,7 +106,7 @@ function TurtleDig(up, mid, low)
 			turtle.digUp() 
 		end
 		if mid then
-			print(string.format("\27[0m Digging infront of me.[X%s Y%s]", offsetx, offsety))
+			print(string.format("Digging infront of me.[X%s Y%s]", offsetx, offsety))
 			turtle.dig() 
 		end
 		if low then
@@ -232,8 +232,7 @@ function placeTorch()
         for i = 16, 13, -1 do
             turtle.select(i)
             if (turtle.getItemCount() > 1) then
-                torchstr = textutils.serialise(turtle.getItemDetail())
-                if not (string.match(torchstr, "torch")) then
+                if not (isBlockin("torch", turtle.getItemDetail())) then
                 else
                     TurtlePlace(false, false, true)
                     break
@@ -248,9 +247,10 @@ function placeLavaWall()
 		turtle.select(i)
 		os.sleep(0.25)
 		if (turtle.getItemCount() > 1) then
-			torchstr = textutils.serialise(turtle.getItemDetail())
+            --isBlockin("torch", lavastr)
+			lavastr = turtle.getItemDetail()
 			os.sleep(0.1)
-			if (string.find(torchstr, "cobblestone") or string.find(torchstr, "diorite") or string.find(torchstr, "andesite") or string.find(torchstr, "granite") or string.find(torchstr, "minecraft:stone") or string.find(torchstr, "minecraft:dirt") or string.find(torchstr, "minecraft:tuff") or string.find(torchstr, "minecraft:deepslate")) then
+			if (isBlockin("cobblestone", lavastr) or isBlockin("diorite", lavastr) or isBlockin("andesite", lavastr) or isBlockin("granite", lavastr) or isBlockin("minecraft:stone", lavastr) or isBlockin("dirt", lavastr) or isBlockin("minecraft:tuff", lavastr) or isBlockin("deepslate", lavastr)) then
 				os.sleep(0.2)
 				TurtlePlace(true, true, true)
 				break
@@ -276,8 +276,8 @@ function placeChest()
         for i = 16, 13, -1 do
             turtle.select(i)
             if (turtle.getItemCount() > 1) then
-                torchstr = textutils.serialise(turtle.getItemDetail())
-                if not (string.match(torchstr, "chest")) then
+                --isBlockin("lava", data)
+                if not (isBlockin("chest", turtle.getItemDetail())) then
                   print("No chest to unload into.")
                 else
 					os.sleep(1)
@@ -285,8 +285,7 @@ function placeChest()
 					os.sleep(1)
                     for ib = 16, 1, -1 do
                       turtle.select(ib)
-                      torchstr = textutils.serialise(turtle.getItemDetail())
-                      if not (string.match(torchstr, "chest") or string.match(torchstr, "torch")) then
+                      if not (isBlockin("chest", turtle.getItemDetail()) or isBlockin("torch", turtle.getItemDetail())) then
                         turtle.dropDown()
                       end
                     end
@@ -298,15 +297,8 @@ function placeChest()
 end
 function SensitiveDigDown()
 	local has_block, data = turtle.inspectDown()
-    if has_block then --
-        --print(textutils.serialise(data))
-        -- {
-        --   name = "minecraft:oak_log",
-        --   state = { axis = "x" },
-        --   tags = { ["minecraft:logs"] = true, ... },
-        -- }
-        --[[os.loadAPI("json")]] obj = textutils.serialise(data)
-        if (string.match(obj, "chest") or string.match(obj, "torch")) then
+    if has_block then
+        if (isBlockin("chest", data) or isBlockin("torch", data)) then
 			print("Skipped underblock, because it has mining machine equipment.")
             --Skip
         else
@@ -576,6 +568,28 @@ function startApp()
             --settings()
             openSettings()
         end
+    end
+end
+
+--print coloured text @Mads
+--usage: printWithFormat("&7Hello, &aWorld!")
+local function printWithFormat(...)
+    local s = "&1"
+    for k, v in ipairs(arg) do
+            s = s .. v
+    end
+    s = s .. "&0"
+
+    local fields = {}
+    local lastcolor, lastpos = "0", 0
+    for pos, clr in s:gmatch"()&(%x)" do
+            table.insert(fields, {s:sub(lastpos + 2, pos - 1), lastcolor})
+            lastcolor, lastpos = clr , pos
+    end
+
+    for i = 2, #fields do
+            term.setTextColor(2 ^ (tonumber(fields[i][2], 16)))
+            io.write(fields[i][1])
     end
 end
 
