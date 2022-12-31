@@ -72,6 +72,16 @@ function openLogEntry()
 	printLog("--START OF LOG SESSION--")
 end
 
+function bootscreen()
+    img=paintutils.loadImage("alien.png")
+    term.clear()
+    paintutils.drawImage(img, 0, 1)
+    os.sleep(3)
+    term.clear()
+end
+
+
+
 function CorrectTurtleOffsetDirByFacing()
 	if (getTurtleFacing() == 1) then setOffsetDirection(0, 1) end
 	if (getTurtleFacing() == 2) then setOffsetDirection(1, 0) end
@@ -612,6 +622,7 @@ end
 --------------------------------------------------
 --Call main function
 openLogEntry()
+bootscreen()
 startApp()
 
 ---------------------------------------------------------------------------
