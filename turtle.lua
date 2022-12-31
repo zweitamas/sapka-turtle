@@ -6,6 +6,9 @@ internal_background_notification_color = colors.yellow
 internal_background_notification_color_top = colors.orange
 --lmfayoooooooooooooo
 
+
+--some function
+
 internal_text_color = colors.white
 internal_text_highlighted_color = colors.black
 internal_text_highlighted_background_color = colors.white
