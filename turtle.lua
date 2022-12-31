@@ -1,3 +1,7 @@
+---@diagnostic disable: undefined-global, undefined-field, assign-type-mis, assign-type-mismatchmatch, undefined-field, unknown-diag-code, unknown-diag-code, unknown-diag-code, assign-type-mismatch, unknown-diag-code, lowercase-global, unknown-diag-code, unknown-diag-code, unknown-diag-code, unknown-diag-code, unknown-diag-code, unknown-diag-code
+
+
+
 local monitor = peripheral.find("monitor")
 
 internal_background_color = colors.blue
@@ -50,8 +54,9 @@ function isBlockin(myblock, inspectedblock)
 	--example isBlockin("gravel", data)
 	answer=string.match(textutils.serialise(inspectedblock), myblock)
 	if (answer ~= nil) then 
-	return true
-	else false end
+	    return true
+	else return false
+    end
 end
 
 function printLog(text)
@@ -189,9 +194,8 @@ function checkGravelism()
 --Gravel is a shitty thang. :@
 	local isgravel=false
 	local has_block, data = turtle.inspect()
-    if has_block then --
-
-		[[--obj = textutils.serialise(data)
+    if has_block then
+		--[[--obj = textutils.serialise(data)
         if (string.match(obj, "gravel") or string.match(obj, "sand")) then--]]
 		if (isBlockin("gravel", data)) then
 			print("Found damned gravel...")
