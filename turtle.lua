@@ -82,8 +82,8 @@ function bootscreen()
 end
 function drawGUIbox()
     term.clear()
-    paintutils.drawLine(1, 1, 32, 32, colors.red) --default color
-    paintutils.drawLine(1, 1, 1, 32, colors.blue) --Top Bar
+    paintutils.drawBox(1, 1, 32, 32, colors.red) --default color
+    paintutils.drawBox(1, 1, 1, 32, colors.blue) --Top Bar
     os.sleep(3)
     term.clear()
 end
