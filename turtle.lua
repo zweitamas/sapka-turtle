@@ -2,6 +2,11 @@
 
 
 
+--[[
+print('\27[0mDone!')
+print('\27[mDone!')
+--]]
+
 local monitor = peripheral.find("monitor")
 
 internal_background_color = colors.blue
@@ -9,9 +14,6 @@ internal_background_setting_color = colors.red
 internal_background_notification_color = colors.yellow
 internal_background_notification_color_top = colors.orange
 --lmfayoooooooooooooo
-
-
---some function
 
 internal_text_color = colors.white
 internal_text_highlighted_color = colors.black
@@ -104,7 +106,7 @@ function TurtleDig(up, mid, low)
 			turtle.digUp() 
 		end
 		if mid then
-			print(string.format("Digging infront of me.[X%s Y%s]", offsetx, offsety))
+			print(string.format("\27[0m Digging infront of me.[X%s Y%s]", offsetx, offsety))
 			turtle.dig() 
 		end
 		if low then
@@ -195,23 +197,14 @@ function checkGravelism()
 	local isgravel=false
 	local has_block, data = turtle.inspect()
     if has_block then
-		--[[--obj = textutils.serialise(data)
-        if (string.match(obj, "gravel") or string.match(obj, "sand")) then--]]
-		if (isBlockin("gravel", data)) then
+		if (isBlockin("gravel", data) or isBlockin("sand", data)) then
 			print("Found damned gravel...")
 			isgravel=true
 			while isgravel do
 				os.sleep(0.4)
 				local has_blockb, datab = turtle.inspect()
-				if has_blockb then --
-					--print(textutils.serialise(data))
-					-- {
-					--   name = "minecraft:oak_log",
-					--   state = { axis = "x" },
-					--   tags = { ["minecraft:logs"] = true, ... },
-					-- }
-					--[[os.loadAPI("json")]]
-					if (string.match(textutils.serialise(datab), "gravel") or string.match(textutils.serialise(datab), "sand")) then
+				if has_blockb then
+					if (isBlockin("gravel", datab) or isBlockin("sand", datab)) then
 						print("Excavating dog shit.")
 						TurtleDig(true, true)
 						--Dig gravel
@@ -343,17 +336,9 @@ end
 function isAir()
     local has_block, data = turtle.inspect()
     if has_block then --
-        --print(textutils.serialise(data))
-        -- {
-        --   name = "minecraft:oak_log",
-        --   state = { axis = "x" },
-        --   tags = { ["minecraft:logs"] = true, ... },
-        -- }
-        --[[os.loadAPI("json")]] 
-		obj = textutils.serialise(data)
-        if (string.match(obj, "water")) then
+        if (isBlockin("water", data)) then
             foundAir()
-        elseif (string.match(obj, "lava")) then
+        elseif (isBlockin("lava", data)) then
             foundLava()
         else
             TurtleDig(true, true, true)
