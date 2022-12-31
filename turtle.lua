@@ -4,7 +4,7 @@ internal_background_color = colors.blue
 internal_background_setting_color = colors.red
 internal_background_notification_color = colors.yellow
 internal_background_notification_color_top = colors.orange
-
+--asdasdas
 
 internal_text_color = colors.white
 internal_text_highlighted_color = colors.black
