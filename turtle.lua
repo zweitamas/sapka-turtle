@@ -83,7 +83,7 @@ end
 function drawGUIbox()
     term.clear()
     paintutils.drawFilledBox(1, 1, 32, 32, colors.red) --default color
-    paintutils.drawFilledBox(1, 1, 1, 16, colors.blue) --Top Bar
+    paintutils.drawFilledBox(1, 1, 32, 1, colors.blue) --Top Bar
     os.sleep(3)
     term.clear()
 end
