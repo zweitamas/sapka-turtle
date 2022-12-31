@@ -338,6 +338,22 @@ function isAir()
     else
         foundAir()
     end
+
+    local has_block, data = turtle.inspectUp()
+    if has_block then
+        if (isBlockin("lava", data)) then
+            foundLava()
+        end
+    end
+
+    local has_block, data = turtle.inspectDown()
+    if has_block then
+        if (isBlockin("lava", data)) then
+            foundLava()
+        end
+    end
+
+    
 end
 function setOffsetDirection(x, y)
 	directionx=x
