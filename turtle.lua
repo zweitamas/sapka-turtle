@@ -78,7 +78,13 @@ function bootscreen()
     --os.sleep(3)
     term.clear()
     drawGUIbox("Miner feedback", colors.black, colors.lightGray, colors.yellow)
+    for i = 1,15
+    do 
+        printGUIfifo(i, colors.black, 2, 5)
+        os.sleep(0.3)
+    end
 end
+
 function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
     titletxt=titletxt or "Window"
     titletxtcolor=titletxtcolor or colors.black
@@ -90,11 +96,34 @@ function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
     paintutils.drawFilledBox(1, 1, 50, 1, titlebgcolor) --Top Bar
     term.setCursorPos(1,1)
     term.setTextColor(titletxtcolor)
-    term.write(string.format("[] %s", titletxt))
-    os.sleep(3)
+    term.write(titletxt)
+
+    term.setBackgroundColor(bgcolor)
+    --os.sleep(3)
     term.clear()
 end
+function printGUIfifo(txt, txtcolor, fromline, toline)
+    txt=txt or "Undefined FIFO text"
+    txtcolor=txtcolor or colors.black
+    fromline=fromline or 2
+    toline=toline or 2
 
+    local fifox, fifoy = getCursorPos()
+    while (fifoy<fromline) do
+        fifoy=fifoy+1
+    end
+    while (fifoy>toline) do
+        fifoy=fromline
+    end
+    if (fifoy~=fromline) then
+        term.setCursorPos(1, fifoy-1)
+        term.write(" ")
+    end
+    term.setCursorPos(1, fifoy)
+    term.clearLine()
+    term.setTextColor(txtcolor)
+    term.write(string.format(">%s", txt))
+end
 
 
 function CorrectTurtleOffsetDirByFacing()
