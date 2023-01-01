@@ -100,7 +100,7 @@ function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
 
     term.setBackgroundColor(bgcolor)
     --os.sleep(3)
-    term.clear()
+    --term.clear()
 end
 function printGUIfifo(txt, txtcolor, fromline, toline)
     txt=txt or "Undefined FIFO text"
@@ -109,15 +109,19 @@ function printGUIfifo(txt, txtcolor, fromline, toline)
     toline=toline or 2
 
     local fifox, fifoy = term.getCursorPos()
+    printLog(string.format("current cursorpos is %s %s", fifox, fifoy))
     while (fifoy<fromline) do
         fifoy=fifoy+1
+        printLog(string.format("adding y+1, current cursorpos is %s %s", fifox, fifoy))
     end
     while (fifoy>toline) do
         fifoy=fromline
+        printLog(string.format("fifoy too high, current cursorpos is %s %s", fifox, fifoy))
     end
     if (fifoy~=fromline) then
         term.setCursorPos(1, fifoy-1)
         term.write(" ")
+        printLog(string.format("fifoy is not fromline, skipping charrem, cursorpos is %s %s", fifox, fifoy))
     end
     term.setCursorPos(1, fifoy)
     term.clearLine()
