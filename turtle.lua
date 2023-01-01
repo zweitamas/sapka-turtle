@@ -85,12 +85,7 @@ end
 function bootscreen()
     --drawGUIimage("alien.png", 3, 0, 1)
     term.clear()
-    drawGUIbox("Miner feedback", colors.black, colors.lightGray, colors.yellow)
-    for i = 1,15
-    do 
-        printGUIfifo(i, colors.black, 2, 6)
-        os.sleep(0.3)
-    end
+    --drawGUIbox("Miner feedback", colors.black, colors.lightGray, colors.yellow)
 end
 
 function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
@@ -175,15 +170,15 @@ function TurtleDig(up, mid, low)
 	
 	if not lavathreat then
 		if up then
-			print(string.format("Digging above me.[X%s Y%s]", offsetx, offsety))
+            printGUIfifo(string.format("Digging above.[X%s Y%s]", offsetx, offsety), colors.black, 2, 8)
 			turtle.digUp() 
 		end
 		if mid then
-			print(string.format("Digging infront of me.[X%s Y%s]", offsetx, offsety))
+			printGUIfifo(string.format("Digging front.[X%s Y%s]", offsetx, offsety), colors.black, 2, 8)
 			turtle.dig() 
 		end
 		if low then
-			print(string.format("Digging under me.[X%s Y%s]", offsetx, offsety))
+			printGUIfifo(string.format("Digging under.[X%s Y%s]", offsetx, offsety), colors.black, 2, 8)
 			SensitiveDigDown() 
 		end
 	end
@@ -226,8 +221,8 @@ end
 function returnToCenter(backSteps)
 	totalstep=0
 	backSteps=tonumber(backSteps) or 0
-	print(string.format("Returning to center and %s back from [X%s Y%s]", backSteps, offsetx, offsety))
-	print(string.format("[FACING: %s]", getTurtleFacing()))
+	--print(string.format("[FACING: %s]", getTurtleFacing()))
+    printGUIfifo(string.format("Returning to center and %s back from [X%s Y%s]", backSteps, offsetx, offsety), colors.black, 2, 8)
 	returning=true
 	while (returning) do
 		while (offsetx ~= 0) do
@@ -271,25 +266,25 @@ function checkGravelism()
 	local has_block, data = turtle.inspect()
     if has_block then
 		if (isBlockin("gravel", data) or isBlockin("sand", data)) then
-			print("Found damned gravel...")
+            printGUIfifo("Found damned gravel...", colors.black, 2, 8)
 			isgravel=true
 			while isgravel do
 				os.sleep(0.4)
 				local has_blockb, datab = turtle.inspect()
 				if has_blockb then
 					if (isBlockin("gravel", datab) or isBlockin("sand", datab)) then
-						print("Excavating dog shit.")
+						printGUIfifo("Excavating dog poop.", colors.black, 2, 8)
 						TurtleDig(true, true)
 						--Dig gravel
 					else
 						isgravel=false
-						print("Way is free!")
+						printGUIfifo("Way is free!", colors.black, 2, 8)
 						os.sleep(0.4)
 						isAir()
 					end
 				else
 					isgravel=false
-					print("Way is free!")
+					printGUIfifo("Way is free!", colors.black, 2, 8)
 					os.sleep(0.4)
 					isAir()
 				end
@@ -329,19 +324,22 @@ function placeLavaWall()
 				break
 			else
 				print("Fatal error! Cannot fill lava with block! Help!")
+                printGUIfifo("Fatal error! Cannot fill lava with block! Help!", colors.black, 2, 8)
+                --printGUIfifo(string.format("Returning to center and %s back from [X%s Y%s]", backSteps, offsetx, offsety), colors.black, 2, 8)
+	
 			end
 		end
 	end
 end
 
 function countEmptySlots()
-  print("Counting empty slots...")
+    printGUIfifo("Counting empty slots...", colors.black, 2, 8)
   emptyslots=0
   for i = 16, 1, -1 do
     turtle.select(i)
     if (turtle.getItemDetail()==nil) then emptyslots = emptyslots + 1 end
   end
-  if (emptyslots<2) then placeChest() print("Placed a chest to empty inventory.") end
+  if (emptyslots<2) then placeChest() printGUIfifo("Placed a chest.", colors.black, 2, 8) end
 end
 
 function placeChest()
@@ -351,7 +349,7 @@ function placeChest()
             if (turtle.getItemCount() > 1) then
                 --isBlockin("lava", data)
                 if not (isBlockin("chest", turtle.getItemDetail())) then
-                  print("No chest to unload into.")
+                    printGUIfifo("No chest found in inv!", colors.black, 2, 8)
                 else
 					os.sleep(1)
                     TurtlePlace(false, false, true)
@@ -372,11 +370,11 @@ function SensitiveDigDown()
 	local has_block, data = turtle.inspectDown()
     if has_block then
         if (isBlockin("chest", data) or isBlockin("torch", data)) then
-			print("Skipped underblock, because it has mining machine equipment.")
+			printGUIfifo("Avoiding mining equipment destruction.", colors.black, 2, 8)
             --Skip
         else
 			turtle.digDown()
-			print("Digging under me.")
+			printGUIfifo("Digging under me.", colors.black, 2, 8)
             os.sleep(0.25)
 		end
 	end
@@ -384,7 +382,7 @@ end
 
 function foundLava()
 	lavathreat=true
-    print("Found lava! Security terminating!")
+    printGUIfifo("Found LAVA! Security terminating.", colors.black, 2, 8)
 	TurtleBack()
 	os.sleep(0.5)
 	placeLavaWall()
@@ -394,7 +392,7 @@ function foundLava()
 end
 
 function foundAir()
-    print("Found air infront of me.")
+    printGUIfifo("Found air infront of me.", colors.black, 2, 8)
     TurtleDig(true, false, false)
 end
 --If there's air do x
@@ -623,16 +621,14 @@ function startApp()
         if (screenid == 0 and ((tonumber(x) >= 5 and tonumber(y) >= 2) and (tonumber(x) <= 12 and tonumber(y) <= 2))) then
             --mine()
             screenid = 1
-            term.setBackgroundColor(internal_background_notification_color)
-            term.clear()
-            term.setTextColor(internal_text_notification_color)
-            term.setCursorPos(1, 1)
+
 			totalstep = 0
             step = -1
 			offsetx=0
 			offsety=0
 			directionx=0
 			directiony=1
+            drawGUIbox("Mining proccess", colors.black, colors.lightGray, internal_background_notification_color)
             doStep()
         end
         if (screenid == 0 and ((tonumber(x) >= 6 and tonumber(y) >= 3) and (tonumber(x) <= 14 and tonumber(y) <= 3))) then
