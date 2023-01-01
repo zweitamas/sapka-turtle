@@ -374,7 +374,7 @@ function SensitiveDigDown()
             --Skip
         else
 			turtle.digDown()
-			printGUIfifo("Digging under me.", colors.black, 2, 8)
+			printGUIfifo(string.format("Digging under me.[X%s Y%s]", offsetx, offsety), colors.black, 2, 8)
             os.sleep(0.25)
 		end
 	end
@@ -382,7 +382,7 @@ end
 
 function foundLava()
 	lavathreat=true
-    printGUIfifo("Found LAVA! Security terminating.", colors.black, 2, 8)
+    printGUIfifo(string.format("LAVA security shutdown.[X%s Y%s]", offsetx, offsety), colors.black, 2, 8)
 	TurtleBack()
 	os.sleep(0.5)
 	placeLavaWall()
@@ -392,7 +392,7 @@ function foundLava()
 end
 
 function foundAir()
-    printGUIfifo("Found air infront of me.", colors.black, 2, 8)
+    printGUIfifo(string.format("Found air.[X%s Y%s]", offsetx, offsety), colors.black, 2, 8)
     TurtleDig(true, false, false)
 end
 --If there's air do x
