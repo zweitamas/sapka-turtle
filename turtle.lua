@@ -81,12 +81,15 @@ function bootscreen()
 end
 function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
     titletxt=titletxt or "Window"
+    titletxtcolor=titletxtcolor or colors.black
     titlebgcolor=titlebgcolor or colors.lightGray
     bgcolor=bgcolor or colors.lightBlue
 
     term.clear()
-    paintutils.drawFilledBox(1, 1, 50, 50, colors.lightBlue) --default color
-    paintutils.drawFilledBox(1, 1, 50, 1, colors.lightGray) --Top Bar
+    paintutils.drawFilledBox(1, 1, 50, 50, bgcolor) --default color
+    paintutils.drawFilledBox(1, 1, 50, 1, titlebgcolor) --Top Bar
+    term.setCursorPos(1,1)
+    term.setTextColor(titletxtcolor)
     os.sleep(3)
     term.clear()
 end
