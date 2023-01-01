@@ -126,15 +126,19 @@ function printGUIfifo(txt, txtcolor, fromline, toline)
         fifoy=fromline
         printLog(string.format("fifoy too high, current cursorpos is %s %s", fifox, fifoy))
     end
-    if (fifoy~=fromline) then
+    if (fifoy>fromline) then
         term.setCursorPos(1, fifoy-1)
         term.write(" ")
         printLog(string.format("fifoy is not fromline, skipping charrem, cursorpos is %s %s", fifox, fifoy))
     end
-    term.setCursorPos(1, fifoy+1)
+    term.setCursorPos(1, fifoy)
     term.clearLine()
     term.setTextColor(txtcolor)
     term.write(string.format(">%s", txt))
+    if (fifoy>=fromline) then
+        term.setCursorPos(1, fifoy+1)
+        --printLog(string.format("fifoy is not fromline, skipping charrem, cursorpos is %s %s", fifox, fifoy))
+    end
 end
 
 
