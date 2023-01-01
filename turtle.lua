@@ -90,7 +90,7 @@ function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
     paintutils.drawFilledBox(1, 1, 50, 1, titlebgcolor) --Top Bar
     term.setCursorPos(1,1)
     term.setTextColor(titletxtcolor)
-    term.write(string.format("■ %s", titletxt))
+    term.write(string.format("[] %s", titletxt))
     os.sleep(3)
     term.clear()
 end
