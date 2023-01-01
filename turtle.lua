@@ -108,7 +108,7 @@ function printGUIfifo(txt, txtcolor, fromline, toline)
     fromline=fromline or 2
     toline=toline or 2
 
-    local fifox, fifoy = getCursorPos()
+    local fifox, fifoy = term.getCursorPos()
     while (fifoy<fromline) do
         fifoy=fifoy+1
     end
