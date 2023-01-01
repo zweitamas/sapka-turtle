@@ -131,7 +131,7 @@ function printGUIfifo(txt, txtcolor, fromline, toline)
         term.write(" ")
         printLog(string.format("fifoy is not fromline, skipping charrem, cursorpos is %s %s", fifox, fifoy))
     end
-    term.setCursorPos(1, fifoy)
+    term.setCursorPos(1, fifoy+1)
     term.clearLine()
     term.setTextColor(txtcolor)
     term.write(string.format(">%s", txt))
