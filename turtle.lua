@@ -72,10 +72,10 @@ function openLogEntry()
 end
 
 function bootscreen()
-    img=paintutils.loadImage("alien.png")
+    --img=paintutils.loadImage("alien.png")
     term.clear()
-    paintutils.drawImage(img, 0, 1)
-    os.sleep(3)
+    --paintutils.drawImage(img, 0, 1)
+    --os.sleep(3)
     term.clear()
     drawGUIbox("Miner feedback", colors.black, colors.lightGray, colors.yellow)
 end
@@ -90,6 +90,7 @@ function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
     paintutils.drawFilledBox(1, 1, 50, 1, titlebgcolor) --Top Bar
     term.setCursorPos(1,1)
     term.setTextColor(titletxtcolor)
+    term.write(titletxt)
     os.sleep(3)
     term.clear()
 end
