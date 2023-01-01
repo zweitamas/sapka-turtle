@@ -71,16 +71,24 @@ function openLogEntry()
 	printLog("--START OF LOG SESSION--")
 end
 
-function bootscreen()
-    --img=paintutils.loadImage("alien.png")
+function drawGUIimage(imgsrc, sleep, x, y)
+    sleep=sleep or 3
+    x=x or 0
+    y=y or 1
+
+    img=paintutils.loadImage(imgsrc)
     term.clear()
-    --paintutils.drawImage(img, 0, 1)
-    --os.sleep(3)
+    paintutils.drawImage(img, x, y)
+    os.sleep(3)
+    term.clear()
+end
+function bootscreen()
+    --drawGUIimage("alien.png", 3, 0, 1)
     term.clear()
     drawGUIbox("Miner feedback", colors.black, colors.lightGray, colors.yellow)
     for i = 1,15
     do 
-        printGUIfifo(i, colors.black, 2, 5)
+        printGUIfifo(i, colors.black, 2, 6)
         os.sleep(0.3)
     end
 end
@@ -105,8 +113,8 @@ end
 function printGUIfifo(txt, txtcolor, fromline, toline)
     txt=txt or "Undefined FIFO text"
     txtcolor=txtcolor or colors.black
-    fromline=fromline or 2
-    toline=toline or 2
+    fromline=tonumber(fromline) or 2
+    toline=tonumber(toline) or 2
 
     local fifox, fifoy = term.getCursorPos()
     printLog(string.format("current cursorpos is %s %s", fifox, fifoy))
@@ -670,6 +678,7 @@ end
 --------------------------------------------------
 --Call main function
 openLogEntry()
+
 bootscreen()
 startApp()
 
