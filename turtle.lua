@@ -129,7 +129,10 @@ function printGUIfifo(txt, txtcolor, fromline, toline)
     if (fifoy>fromline) then
         term.setCursorPos(1, fifoy-1)
         term.write(" ")
-        printLog(string.format("fifoy is not fromline, skipping charrem, cursorpos is %s %s", fifox, fifoy))
+        term.setCursorPos(1, toline)
+        term.write(" ")
+        --printLog(string.format("fifoy is not fromline, skipping charrem, cursorpos is %s %s", fifox, fifoy))
+
     end
     term.setCursorPos(1, fifoy)
     term.clearLine()
