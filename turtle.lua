@@ -13,7 +13,6 @@ internal_background_color = colors.blue
 internal_background_setting_color = colors.red
 internal_background_notification_color = colors.yellow
 internal_background_notification_color_top = colors.orange
---lmfayoooooooooooooo
 
 internal_text_color = colors.white
 internal_text_highlighted_color = colors.black
@@ -78,9 +77,13 @@ function bootscreen()
     paintutils.drawImage(img, 0, 1)
     os.sleep(3)
     term.clear()
-    drawGUIbox()
+    drawGUIbox("Miner feedback", colors.black, colors.lightGray, colors.yellow)
 end
-function drawGUIbox()
+function drawGUIbox(titletxt, titletxtcolor, titlebgcolor, bgcolor)
+    titletxt=titletxt or "Window"
+    titlebgcolor=titlebgcolor or colors.lightGray
+    bgcolor=bgcolor or colors.lightBlue
+
     term.clear()
     paintutils.drawFilledBox(1, 1, 50, 50, colors.lightBlue) --default color
     paintutils.drawFilledBox(1, 1, 50, 1, colors.lightGray) --Top Bar
